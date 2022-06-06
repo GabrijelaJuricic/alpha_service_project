@@ -1,0 +1,22 @@
+.card-container {
+  width: 100%;
+  max-width: 1120px;
+  height: 610px;
+  padding: 5rem 7rem;
+  background: linear-gradient(360deg, #dbdbdb 0%, #f0f0f0 76.53%);
+}
+.header {
+  display: flex;
+  width: 7.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.header img {
+  height: 36px;
+  width: 36px;
+}
+.header h3 {
+  margin: 0;
+  font-size: x-large;
+}
