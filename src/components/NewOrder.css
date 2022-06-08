@@ -1,0 +1,143 @@
+.new-order-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* --- left side of the page --- */
+.left-side {
+  display: flex;
+  flex-direction: column;
+}
+.left-side h2 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
+.input-field input {
+  height: 35px;
+  padding: 5px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+}
+
+/* --- middle of the page --- */
+.middle {
+  display: flex;
+  flex-direction: column;
+}
+textarea {
+  width: 295px;
+  height: 120px;
+  left: 448px;
+  top: 218px;
+  border: 1px solid #d0d0d0;
+  background: transparent;
+  border-radius: 8px;
+}
+.type-of-service {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.type-of-service-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  color: #737373;
+}
+.checkbox-round {
+  width: 13px;
+  height: 13px;
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: sub;
+  border: 1px solid #ddd;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+.checkbox-round:checked {
+  background-color: black;
+}
+.note {
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: -0.02em;
+  color: #737373;
+}
+p {
+  margin: 0;
+}
+.note span {
+  font-weight: 500;
+}
+
+/* --- right side of the page --- */
+.right-side {
+  /* display: flex;
+  flex-direction: column; */
+  box-sizing: border-box;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  padding: 20px;
+}
+.right-side h3 {
+  margin-top: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 84.52%;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  color: #737373;
+}
+.order-date {
+  flex-flow: flex column;
+}
+.order-date p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  color: #737373;
+}
+.btn {
+  width: 140px;
+  min-width: 110px;
+  height: 30px;
+  margin-right: 15px;
+  text-align: center;
+  background: #836048;
+  border-radius: 12px;
+  border: none;
+  color: #fafafa;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}
+.btn-cancel {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+  letter-spacing: -0.02em;
+  color: #737373;
+  border: none;
+  margin-right: 10px;
+}
