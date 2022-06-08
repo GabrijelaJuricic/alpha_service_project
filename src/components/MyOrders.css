@@ -3,14 +3,14 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.left-side {
+.my-orders-left-side {
   display: flex;
   flex-direction: column;
   width: 50%;
   height: 295px;
   justify-content: space-between;
 }
-.left-side p {
+.my-orders-left-side p {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
@@ -22,7 +22,8 @@
   font-size: 24px;
   line-height: 20px;
   letter-spacing: -0.02em;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 .no-orders {
   display: flex;
@@ -37,20 +38,19 @@
   text-decoration: none;
   color: #836048;
 }
-.right-side {
+.my-order-right-side {
   display: flex;
   width: 50%;
   justify-content: space-between;
 }
-.right-side img {
+.my-order-right-side img {
   width: 440px;
   height: 550px;
   background: #e5e5e5;
   border-radius: 15px;
 }
-.btn {
+.my-orders-btn {
   width: 200px;
-  min-width: 130px;
   height: 35px;
   padding: 10px;
   margin-right: 15px;

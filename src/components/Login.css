@@ -19,7 +19,7 @@
   justify-content: space-between;
   margin-top: 20px;
 }
-p {
+.login-form > p {
   color: #737373;
   font-style: normal;
   font-weight: 600;
@@ -54,7 +54,7 @@ input {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.btn {
+.login-btn {
   width: inherit;
   height: 45px;
   padding: 10px;

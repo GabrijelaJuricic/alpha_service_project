@@ -12,16 +12,17 @@ const typeOfService = [
 ];
 
 const NewOrder = () => {
-  const [brand, setBrand] = useState();
-  const [model, setModel] = useState();
+  const [, setBrand] = useState();
+  const [, setModel] = useState();
   const [, setState] = useRecoilState(pageDisplayState);
 
+  // --- Event Handlers --- //
   const pageHandler = () => {
-    setState((pageDisplayState) => {
-      return pageDisplayState - 1;
-    });
+    setState(2);
   };
-
+  const cancelHandler = () => {
+    setState(1);
+  };
   const handleBrandChange = (event) => {
     setBrand(event.target.value);
   };
@@ -51,7 +52,6 @@ const NewOrder = () => {
           ]}
           onChange={handleModelChange}
         />
-
         <div className="input-field">
           <label className="label">Model year</label>
           <input type="text" placeholder="Enter Year" />
@@ -100,8 +100,9 @@ const NewOrder = () => {
           <h3>Order Summary</h3>
           <p>March 24, 2022 at 13:42</p>
         </div>
-
-        <button className="btn-cancel">Cancel Order</button>
+        <button className="btn-cancel" onClick={cancelHandler}>
+          Cancel Order
+        </button>
         <button className="btn" onClick={pageHandler}>
           Create Order
         </button>

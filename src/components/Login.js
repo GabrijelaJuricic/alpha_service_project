@@ -8,10 +8,9 @@ import "./Login.css";
 const Login = () => {
   const [, setState] = useRecoilState(pageDisplayState);
 
+  // --- Event Handlers --- //
   const pageHandler = () => {
-    setState((pageDisplayState) => {
-      return pageDisplayState + 1;
-    });
+    setState(2);
   };
 
   return (
@@ -22,7 +21,7 @@ const Login = () => {
         <form className="form">
           <label htmlFor="email">Email Address</label>
           <input type="email" placeholder="Enter your email here" />
-          <button className="btn" onClick={pageHandler}>
+          <button className="login-btn" onClick={pageHandler}>
             Continue
           </button>
         </form>
