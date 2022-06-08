@@ -1,7 +1,18 @@
+import { useRecoilState } from "recoil";
+import { pageDisplayState } from "../atoms";
+
 import "./MyOrders.css";
 import motor2 from "../assets/motor2.png";
 
 const MyOrders = () => {
+  const [, setState] = useRecoilState(pageDisplayState);
+
+  const pageHandler = () => {
+    setState((pageDisplayState) => {
+      return pageDisplayState + 1;
+    });
+  };
+
   return (
     <div className="orders-container">
       <div className="left-side">
@@ -11,11 +22,13 @@ const MyOrders = () => {
         </div>
         <div className="no-orders">
           <p>You have no orders.</p>
-          <a href="btn">Create New Order</a>
+          <a href="">Create New Order</a>
         </div>
       </div>
       <div className="right-side">
-        <button className="btn">Create New Order</button>
+        <button className="btn" onClick={pageHandler}>
+          Create New Order
+        </button>
         <img src={motor2}></img>
       </div>
     </div>

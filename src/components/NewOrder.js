@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { pageDisplayState } from "../atoms";
 import Dropdown from "./Dropdown";
 import "./NewOrder.css";
 
@@ -12,6 +14,13 @@ const typeOfService = [
 const NewOrder = () => {
   const [brand, setBrand] = useState();
   const [model, setModel] = useState();
+  const [, setState] = useRecoilState(pageDisplayState);
+
+  const pageHandler = () => {
+    setState((pageDisplayState) => {
+      return pageDisplayState - 1;
+    });
+  };
 
   const handleBrandChange = (event) => {
     setBrand(event.target.value);
@@ -93,7 +102,9 @@ const NewOrder = () => {
         </div>
 
         <button className="btn-cancel">Cancel Order</button>
-        <button className="btn">Create Order</button>
+        <button className="btn" onClick={pageHandler}>
+          Create Order
+        </button>
       </div>
     </div>
   );

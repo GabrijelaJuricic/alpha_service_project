@@ -1,8 +1,19 @@
+import { useRecoilState } from "recoil";
+import { pageDisplayState } from "../atoms";
+
 import motor1 from "../assets/motor1.png";
 import alphaService from "../assets/alphaService.png";
 import "./Login.css";
 
 const Login = () => {
+  const [, setState] = useRecoilState(pageDisplayState);
+
+  const pageHandler = () => {
+    setState((pageDisplayState) => {
+      return pageDisplayState + 1;
+    });
+  };
+
   return (
     <div className="login-container">
       <div className="login-form">
@@ -11,7 +22,9 @@ const Login = () => {
         <form className="form">
           <label htmlFor="email">Email Address</label>
           <input type="email" placeholder="Enter your email here" />
-          <button className="btn">Continue</button>
+          <button className="btn" onClick={pageHandler}>
+            Continue
+          </button>
         </form>
       </div>
       <div className="img-container">
