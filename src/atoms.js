@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const pageDisplayState = atom({
   key: "pageDisplayState",
-  default: 2,
+  default: 1,
 });
 
 export const csvContentState = atom({
