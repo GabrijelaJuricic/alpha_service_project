@@ -6,8 +6,8 @@ const Dropdown = ({ label, options, value, onChange }) => {
       <div className="label">{label}</div>
       <select value={value} onChange={onChange} className="dropdown-close">
         {options.map((option) => (
-          <option className="dropdown-open" value={option.value}>
-            {option.name}
+          <option key={option} className="dropdown-open" value={option}>
+            {option}
           </option>
         ))}
       </select>

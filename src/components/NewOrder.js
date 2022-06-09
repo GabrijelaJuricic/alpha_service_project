@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { pageDisplayState } from "../atoms";
+import {
+  csvContentState,
+  pageDisplayState,
+  selectedBrandState,
+  uniqueBrandsState,
+  availableModelsState,
+} from "../atoms";
+import Papa from "papaparse";
 import Dropdown from "./Dropdown";
+import service_pricing_list from "../../src/service_pricing_list.csv";
 import "./NewOrder.css";
 
 const typeOfService = [
@@ -14,20 +22,68 @@ const typeOfService = [
 const NewOrder = () => {
   const [, setBrand] = useState();
   const [, setModel] = useState();
-  const [, setState] = useRecoilState(pageDisplayState);
+  const [, setPage] = useRecoilState(pageDisplayState);
+  const [csvContent, setCsvContent] = useRecoilState(csvContentState);
+  const [uniqueBrands, setUniqueBrands] = useRecoilState(uniqueBrandsState);
+  const [selectedBrand, setSelectedBrand] = useRecoilState(selectedBrandState);
+  const [availableModels, setAvailableModels] =
+    useRecoilState(availableModelsState);
 
   // --- Event Handlers --- //
   const pageHandler = () => {
-    setState(2);
+    setPage(2);
   };
   const cancelHandler = () => {
-    setState(1);
+    setPage(1);
   };
   const handleBrandChange = (event) => {
     setBrand(event.target.value);
+    setSelectedBrand(event.target.value);
   };
   const handleModelChange = (event) => {
     setModel(event.target.value);
+  };
+
+  useEffect(() => {
+    fetch(service_pricing_list)
+      .then((response) => response.text())
+      .then((responseText) => {
+        Papa.parse(responseText, {
+          complete: (parsedData) => {
+            setCsvContent(parsedData.data);
+          },
+        });
+      });
+  }, []);
+
+  useEffect(() => {
+    var result = [];
+    if (csvContent.length > 1) {
+      csvContent.slice(1).filter((row) => {
+        result.push(row[0]);
+      });
+      setUniqueBrands(uniqueElementsFromArray(result));
+      setSelectedBrand(result[0]);
+    }
+  }, [csvContent]);
+
+  useEffect(() => {
+    var result = [];
+    if (selectedBrand) {
+      csvContent.slice(1).map((row) => {
+        if (row[0] == selectedBrand) {
+          result.push(row[1]);
+        }
+      });
+      setAvailableModels(result);
+    }
+  }, [selectedBrand]);
+
+  const uniqueElementsFromArray = (elements) => {
+    return elements.reduce(function (a, b) {
+      if (a.indexOf(b) < 0) a.push(b);
+      return a;
+    }, []);
   };
 
   return (
@@ -36,20 +92,12 @@ const NewOrder = () => {
         <h2>New Order</h2>
         <Dropdown
           label="Select Brand"
-          options={[
-            { name: "Aprillia", value: "aprillia" },
-            { name: "Ducati", value: "ducati" },
-            { name: "Yamaha", value: "yamaha" },
-          ]}
+          options={uniqueBrands}
           onChange={handleBrandChange}
         />
         <Dropdown
           label="Select Model"
-          options={[
-            { name: "RS 50", value: "rs50" },
-            { name: "Panigale V4", value: "panigale4" },
-            { name: "MT-03", value: "mt03" },
-          ]}
+          options={availableModels}
           onChange={handleModelChange}
         />
         <div className="input-field">
@@ -68,7 +116,7 @@ const NewOrder = () => {
           <label className="label">Type of service</label>
           {typeOfService.map((service) => {
             return (
-              <label className="type-of-service-text">
+              <label key={service} className="type-of-service-text">
                 <input type="checkbox" className="checkbox-round" />
                 {service}
               </label>
