@@ -44,7 +44,7 @@ label {
   letter-spacing: -0.02em;
   color: #737373;
 }
-input {
+.form > input {
   background: transparent;
   border: 1px solid #d0d0d0;
   border-radius: 8px;

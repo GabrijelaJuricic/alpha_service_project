@@ -14,12 +14,12 @@
 }
 
 .dropdown-close {
-  width: 295px;
   height: 45px;
   padding: 5px;
   margin-bottom: 5px;
   border: 1px solid #d0d0d0;
   border-radius: 8px;
+  background: white;
 }
-.dropdown-open {
-}
+/* .dropdown-open {
+} */
