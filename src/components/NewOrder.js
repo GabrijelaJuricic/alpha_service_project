@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import {
-  csvContentState,
   pageDisplayState,
+  csvContentState,
   selectedBrandState,
+  selectedModelState,
   uniqueBrandsState,
   availableModelsState,
+  lastSupportedYearState,
+  enteredMileageState,
+  enteredYearState,
 } from "../atoms";
+
 import Papa from "papaparse";
 import Dropdown from "./Dropdown";
 import service_pricing_list from "../../src/service_pricing_list.csv";
@@ -20,30 +25,30 @@ const typeOfService = [
 ];
 
 const NewOrder = () => {
-  const [, setBrand] = useState();
-  const [, setModel] = useState();
+  // --- useState --- //
+  const [yearErrorMessage, setYearErrorMessage] = useState();
+  const [mileageErrorMessage, setMileageErrorMessage] = useState();
+
+  // --- useRecoilState --- //
   const [, setPage] = useRecoilState(pageDisplayState);
   const [csvContent, setCsvContent] = useRecoilState(csvContentState);
   const [uniqueBrands, setUniqueBrands] = useRecoilState(uniqueBrandsState);
   const [selectedBrand, setSelectedBrand] = useRecoilState(selectedBrandState);
   const [availableModels, setAvailableModels] =
     useRecoilState(availableModelsState);
+  const [selectedModel, setSelectedModel] = useRecoilState(selectedModelState);
+  const [lastSupportedYear, setLastSupportedYear] = useRecoilState(
+    lastSupportedYearState
+  );
+  const [enteredYear, setEnteredYear] = useRecoilState(enteredYearState);
+  const [enteredMileage, setEnteredMileage] =
+    useRecoilState(enteredMileageState);
 
-  // --- Event Handlers --- //
-  const pageHandler = () => {
-    setPage(2);
-  };
-  const cancelHandler = () => {
-    setPage(1);
-  };
-  const handleBrandChange = (event) => {
-    setBrand(event.target.value);
-    setSelectedBrand(event.target.value);
-  };
-  const handleModelChange = (event) => {
-    setModel(event.target.value);
-  };
+  // --- useRefs --- //
+  const yearInputRef = useRef();
+  const mileageInputRef = useRef();
 
+  //  --- useEffect --- //
   useEffect(() => {
     fetch(service_pricing_list)
       .then((response) => response.text())
@@ -60,7 +65,7 @@ const NewOrder = () => {
     var result = [];
     if (csvContent.length > 1) {
       csvContent.slice(1).filter((row) => {
-        result.push(row[0]);
+        return result.push(row[0]);
       });
       setUniqueBrands(uniqueElementsFromArray(result));
       setSelectedBrand(result[0]);
@@ -71,20 +76,66 @@ const NewOrder = () => {
     var result = [];
     if (selectedBrand) {
       csvContent.slice(1).map((row) => {
-        if (row[0] == selectedBrand) {
+        if (row[0] === selectedBrand) {
           result.push(row[1]);
         }
       });
       setAvailableModels(result);
+      setSelectedModel(result[0]);
     }
   }, [selectedBrand]);
 
+  useEffect(() => {
+    if (selectedModel) {
+      csvContent.slice(1).map((row) => {
+        if (row[0] === selectedBrand && row[1] === selectedModel) {
+          setLastSupportedYear(row[2]);
+        }
+      });
+    }
+  }, [selectedModel]);
+
+  // --- Event Handlers --- //
+  const pageHandler = () => {
+    setPage(2);
+  };
+  const cancelHandler = () => {
+    setPage(1);
+  };
+  const handleBrandChange = (event) => {
+    setSelectedBrand(event.target.value);
+  };
+  const handleModelChange = (event) => {
+    setSelectedModel(event.target.value);
+  };
+  const yearBlurHandler = () => {
+    const yearValue = yearInputRef.current.value.trim();
+    if (yearValue < lastSupportedYear || yearValue > new Date().getFullYear()) {
+      setYearErrorMessage("Invalid input. Please choose valid year.");
+    } else setYearErrorMessage("");
+  };
+  const mileageHandler = () => {
+    const mileageValue = mileageInputRef.current.value.trim();
+    if (mileageValue < enteredMileage) {
+      setMileageErrorMessage("Invalid input. Please enter valid number.");
+    } else setMileageErrorMessage("");
+  };
+
+  // --- Helper functions --- //
   const uniqueElementsFromArray = (elements) => {
     return elements.reduce(function (a, b) {
       if (a.indexOf(b) < 0) a.push(b);
       return a;
     }, []);
   };
+
+  //  --- Dynamic classes --- //
+  const yearInputClasses = yearErrorMessage
+    ? "input-field-error"
+    : "input-field";
+  const mileageInputClasses = mileageErrorMessage
+    ? "input-field-error"
+    : "input-field";
 
   return (
     <div className="new-order-container">
@@ -100,14 +151,27 @@ const NewOrder = () => {
           options={availableModels}
           onChange={handleModelChange}
         />
-        <div className="input-field">
-          <label className="label">Model year</label>
-          <input type="text" placeholder="Enter Year" />
-        </div>
-        <div className="input-field">
-          <label className="label">Milleage</label>
-          <input type="number" placeholder="Enter Milleage" />
-        </div>
+        <label className="label">Model year</label>
+        <input
+          className={yearInputClasses}
+          ref={yearInputRef}
+          type="text"
+          placeholder="Enter Year"
+          onBlur={yearBlurHandler}
+        />
+        {yearErrorMessage && <p className="error-text">{yearErrorMessage}</p>}
+
+        <label className="label">Milleage</label>
+        <input
+          className={mileageInputClasses}
+          ref={mileageInputRef}
+          type="number"
+          placeholder="Enter Milleage"
+          onChange={mileageHandler}
+        />
+        {mileageErrorMessage && (
+          <p className="error-text">{mileageErrorMessage}</p>
+        )}
       </div>
       <div className="middle">
         <div className="label">Choose date:</div>

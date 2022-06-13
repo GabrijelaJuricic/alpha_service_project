@@ -21,13 +21,34 @@
   display: flex;
   flex-direction: column;
 }
-.input-field > input {
+.input-field {
   width: 295px;
   height: 45px;
   padding-left: 10px;
   border: 1px solid #d0d0d0;
   border-radius: 8px;
   background: white;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-field-error {
+  width: 295px;
+  height: 45px;
+  padding-left: 10px;
+  border: 1px solid #e23939;
+  border-radius: 8px;
+  background: white;
+}
+.error-text {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  margin-top: 7px;
+  letter-spacing: -0.02em;
+  color: #e23939;
 }
 
 /* --- middle of the page --- */

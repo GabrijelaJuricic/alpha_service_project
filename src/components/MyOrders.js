@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { pageDisplayState } from "../atoms";
 
-import Papa from "papaparse";
 import "./MyOrders.css";
 import motor2 from "../assets/motor2.png";
 
